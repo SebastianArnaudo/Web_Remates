@@ -1,0 +1,306 @@
+*{
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+nav{
+    color: white;
+    background: linear-gradient(to right top, rgb(217, 0, 0) 20%, rgb(214, 72, 1) 60%);
+    margin-top: 0;
+    display:flex;
+    min-width: 100%;
+    min-height: 10%;
+    align-items: center;
+    justify-content: space-between;
+    text-align: center;
+
+    .logo,.titleNav{
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .logoIMG{
+        height: 50px;        
+        width: auto;
+        border-radius: 50%; 
+    }
+    button{
+        margin-right: 10px;
+        color: white;
+        font-size:medium;
+        border: none;
+        background: none;
+    }
+
+    button:hover{
+        color: #FAC800;
+        text-decoration: underline;
+    }
+}
+
+.modalConteiner{
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal{
+    display: block;
+    padding: 10px;
+    text-align: center;
+    position: fixed;
+    box-sizing: border-box;
+    z-index: 2;
+    background: linear-gradient(to right top, rgb(217, 0, 0) 20%, rgb(214, 72, 1) 60%);
+
+    pointer-events: all;
+    border-radius: .5rem;
+    padding: 10px;
+    text-align: center;
+    min-height: 200px;
+    width: 70%;
+    min-width: min-content;
+    box-shadow: 5px 3px 15px #632102,-5px -3px 15px #632102;
+}
+.closeButtonContent{
+    position: absolute;
+    top: .5rem;
+    right: .5rem;
+}
+
+.closeButton{
+    padding: 5px;
+    font-size: 20px;
+    color:black;
+    height: 10%;
+    width: 10%;
+    min-width: min-content;
+    cursor: pointer;
+    border:0;
+    background: none;
+    transition: color, .2s;
+}
+
+.closeButton:hover{
+    color:rgb(148, 148, 148);
+    transition: color, .2s;
+}
+
+.modalContent{
+    color: rgb(0, 0, 0);
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    align-items: center;        
+}
+
+.imgModal {
+    height: 100%;
+    width: 100%;
+    flex: 1;
+}
+
+.imgModal img {
+    height: 100%;
+    width: 100%;
+    border-top-left-radius: .5rem;
+    border-bottom-left-radius: .5rem;
+}
+
+.infoModal {
+    color: wheat;
+    flex: 1;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    max-height: 300px;                                              
+}
+
+#descModal{
+    font-size:larger;
+    flex: 1;
+    overflow-y: auto;  
+    padding-right: .5rem;      
+}
+
+#descModal::-webkit-scrollbar{
+    width: 7px;
+}
+
+#descModal::-webkit-scrollbar-thumb{
+    background-color: #d9d8d8;
+    border-radius: 5px;
+}
+
+.modalH{
+    display: none;
+}
+
+.mainConteiner{
+    margin-top: 60px;
+    height: 100vh;
+    width: 100%;
+}
+
+.loteConter{
+    height: 100vh;
+    width: 100%;
+    display:grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    padding: .5rem;
+    gap: 2rem;
+}
+
+.lote{
+    cursor: pointer;
+    margin: 0;
+    width: 100%;
+    height: 300px;
+    display: block;
+    border-radius: .5rem;
+    box-shadow: 5px 5px 15px #632102,-5px -5px 15px #632102;
+}
+
+.imagenLote {
+    width: 100%;
+    height: 100%;
+}
+
+.imagenLote img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    display: block;
+    border-radius: .5rem;
+}
+
+.lote{
+    position: relative;
+}
+
+.dato{
+    overflow: hidden;
+    position: absolute;  
+    color: white;     
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;               
+    display: flex;
+    flex-direction: column;
+    justify-content:flex-end;
+    padding: 1rem;             
+    padding-bottom: 2rem; 
+    opacity: 0;
+    border-radius: .5rem;
+    transition: opacity 0.3s ease; 
+}
+
+.lote:hover .dato{
+    opacity: 1;
+    background: linear-gradient(to right top,rgba(0, 0, 0, 0.5) 20%,   #00000048 70%);
+}
+
+.lote h2{ 
+    color: white;
+    z-index: 2;
+    position: absolute;
+    padding:1rem;
+    width: 100% ;
+    bottom: 0rem;         
+    left: 0rem;
+    background-color: #00000048;
+    border-radius: 0.3rem;
+    transition: all 0.5s ease;
+    height: 3rem;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+}
+
+.lote:hover h2 {
+    height: 100%;
+    background: linear-gradient(to right top,rgba(0, 0, 0, 0.5) 20%,   #00000048 70%);
+    border-radius: 0.3rem;
+    align-items: flex-start;
+    padding-top: 2rem;
+}
+
+.lote:hover .dato{
+        z-index: 2;
+}
+
+.contact {
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+    z-index: 10;
+}
+
+.contact img {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+    border-radius: 50%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease;
+}
+
+.contact img:hover {
+    transform: scale(1.1);
+}
+
+@media (max-width: 768px) {
+    .modal {
+        width: 90%; 
+    }
+
+    .modalContent {
+        flex-direction: column;
+    }
+
+    .imgModal img {
+        border-top-left-radius: .5rem;
+        border-top-right-radius: .5rem;
+        border-bottom-left-radius: 0;
+    }
+
+    .infoModal {
+        max-height: none;
+    }
+
+    #descModal {
+        max-height: 200px;
+    }
+
+    .lote:hover .dato {
+        opacity: 0 !important;
+        background: none !important;
+    }
+
+    .lote:hover h2 {
+        height: 3rem !important;
+        background: #00000048 !important;
+        align-items: center !important;
+        padding-top: 0 !important;
+    }
+
+    .contact img:hover {
+        transform: none !important;
+    }
+
+    .closeButton:hover {
+        color: black !important;
+    }
+}
