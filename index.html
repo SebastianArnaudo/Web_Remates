@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="style.css" />
+
     <title>Remates</title>
   </head>
   <body>
@@ -15,34 +16,53 @@
         <h2>Inmobiliaria y Remates Dominici</h2>
       </div>
       <div class="accessButtonContent">
-        <button class="accessButton">Acceder</button>
+        <button class="accessButton" id="accessButton">Acceder</button>
       </div>
     </nav>
 
     <section class="mainContainer">
-      <section class="modalConteiner" id="modalConteiner">
-        <section class="modal" id="modalLote">
-          <section class="closeButtonContent">
+      <section class="modalConteiner modalH" id="modalConteiner">
+        <section class="modalLote modalH" id="modalLote">
+          <div class="closeButtonContent">
             <button class="closeButton" id="closeButton">X</button>
-          </section>
+          </div>
 
-          <section class="modalContent" id="modalContent">
+          <div class="modalContent" id="modalContent">
             <div class="imgModal" id="imgModal">
-              <img src="Imgs\descarga.jpg" alt="" />
+              <img id="modalI" src="" alt="" />
             </div>
             <div class="infoModal">
-              <h2 id="loteModal">Lote n° 1: Herramientas</h2>
-              <h3 id="precioModal">Precio base: 500</h3>
-              <div id="descModal">
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sed
-                  omnis facere nobis, vitae eos aspernatur. In odit omnis,
-                  voluptatum rem autem quis natus, iusto neque, fugit quaerat
-                  sint sequi consequatur!
-                </p>
+              <h2 id="loteModal"></h2>
+              <h3 id="precioModal"></h3>
+              <div class="descModal">
+                <p id="datModal"></p>
               </div>
             </div>
-          </section>
+          </div>
+        </section>
+
+        <section class="modalInput modalH" id="modalInput">
+          <div class="closeButtonContent">
+            <button class="closeButton" id="closeButtonInput">X</button>
+          </div>
+
+          <div class="modalContentI" id="modalContent">
+            <h2>Requiere autorizacion.<br />Ingrese la clave</h2>
+            <div class="inputSector">
+              <input
+                type="password"
+                name="passwordImput"
+                id="passInput"
+                placeholder="Contraseña"
+              />
+              <button class="viewPass" id="viewPass">
+                <img src="Imgs\eye-slash.png" alt="" />
+              </button>
+            </div>
+            <p id="passMessage">Contraseña Incorrecta.</p>
+
+            <button class="insertPass" id="insertPass">Ingresar</button>
+          </div>
         </section>
       </section>
 
@@ -75,7 +95,7 @@
         </div>
         <div class="lote">
           <div class="imagenLote"><img src="Imgs\vagilla.jpg" alt="" /></div>
-          <h2 class="nroLote">Lote n°3: Vagilla</h2>
+          <h2 class="nroLote">Lote n°3: Vajilla</h2>
           <div class="dato">
             <h1 class="precio">Presio base: $500</h1>
             <p class="desc">
