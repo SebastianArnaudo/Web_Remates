@@ -5,9 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="style.css" />
 
-    <title>Remates</title>
+    <title>Remates Dominici</title>
   </head>
   <body>
+    <!-- Barra de navegacion -->
     <nav>
       <div class="logo">
         <img class="logoIMG" src="Imgs\logo.png" alt="" />
@@ -17,18 +18,22 @@
       </div>
       <div class="accessButtonContent">
         <button class="accessButton" id="accessButton">Acceder</button>
+        <button class="exitButton hidden" id="exitButton">Salir</button>
       </div>
     </nav>
 
+    <!-- Contenedor principal -->
     <section class="mainContainer">
-      <section class="modalConteiner modalH" id="modalConteiner">
-        <section class="modalLote modalH" id="modalLote">
+      <!-- Contenedor de POP UPs -->
+      <section class="modalContainer modalHidden" id="modalContainer">
+        <!-- POP UP de expansion de lote -->
+        <section class="modal modalLote modalHidden" id="modalLote">
           <div class="closeButtonContent">
             <button class="closeButton" id="closeButton">X</button>
           </div>
 
           <div class="modalContent" id="modalContent">
-            <div class="imgModal" id="imgModal">
+            <div class="modalImage" id="modalImage">
               <img id="modalI" src="" alt="" />
             </div>
             <div class="infoModal">
@@ -41,17 +46,18 @@
           </div>
         </section>
 
-        <section class="modalInput modalH" id="modalInput">
+        <!-- POP UP de ingreso a modo admin -->
+        <section class="modal modalInput modalHidden" id="modalInput">
           <div class="closeButtonContent">
-            <button class="closeButton" id="closeButtonInput">X</button>
+            <button class="closeButton">X</button>
           </div>
 
-          <div class="modalContentI" id="modalContent">
+          <div class="modalContent modalContentI">
             <h2>Requiere autorizacion.<br />Ingrese la clave</h2>
             <div class="inputSector">
               <input
                 type="password"
-                name="passwordImput"
+                name="passwordInput"
                 id="passInput"
                 placeholder="Contraseña"
               />
@@ -61,28 +67,161 @@
             </div>
             <p id="passMessage">Contraseña Incorrecta.</p>
 
-            <button class="insertPass" id="insertPass">Ingresar</button>
+            <button class="actionButton" id="insertPass">Ingresar</button>
+          </div>
+        </section>
+
+        <!-- POP UP de salida de modo admin -->
+        <section class="modal modalConfirm modalHidden" id="modalConfirm">
+          <div class="closeButtonContent">
+            <button class="closeButton">X</button>
+          </div>
+
+          <div class="modalContent modalContentC">
+            <h2>¿Seguro que quiere salir?</h2>
+            <button class="actionButton" id="confirmExitButton">Salir</button>
+          </div>
+        </section>
+
+        <!-- POP UP de creacion de lote -->
+        <section class="modal modalFormul newLote modalHidden" id="modalFormul">
+          <div class="closeButtonContent">
+            <button class="closeButton">X</button>
+          </div>
+          <div class="modalContent modalContentF">
+            <div class="inputSector">
+              <h2>Cargando Lote</h2>
+              <form action="" id="formulLote">
+                <div class="titles">
+                  <div class="name">
+                    <label for="TitleLoteInput">Nombre del lote</label>
+                    <input
+                      type="text"
+                      name="TitleLoteInput"
+                      id="inputTitle"
+                      placeholder="Titulo del lote"
+                    />
+                  </div>
+                  <div class="number">
+                    <label for="nroLote">Numero del lote</label>
+                    <input
+                      type="number"
+                      name="nroLoteInput"
+                      id="inputNro"
+                      placeholder="Nro del lote"
+                    />
+                  </div>
+                </div>
+                <div class="price">
+                  <label for="inputPre">Precio del lote</label>
+                  <input
+                    type="number"
+                    name="precioLoteInput"
+                    id="inputPre"
+                    placeholder="Precio del lote"
+                  />
+                </div>
+                <div class="descInp">
+                  <label for="desLoteInput">Descripcion del lote</label>
+                  <textarea
+                    name="desLoteInput"
+                    id="inputDes"
+                    cols="30"
+                    rows="20"
+                    placeholder="Descripcion del lote"
+                  ></textarea>
+                </div>
+                <div class="buttonsContainer">
+                  <label for="imgInput" class="falseImgInput" id="falseImgInput"
+                    >Ingrese la imagen del lote</label
+                  >
+                  <input
+                    type="file"
+                    accept="image/*"
+                    name="imgInput"
+                    id="imgInput"
+                  />
+                  <div
+                    class="imgPreviewContainer hidden"
+                    id="imgPreviewContainer"
+                  >
+                    <img
+                      src=""
+                      alt="Vista previa del lote"
+                      class="imgPreview"
+                      id="imgPreview"
+                    />
+                  </div>
+                  <button class="actionButton" id="addLote">Cargar Lote</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </section>
+
+        <!-- POP UP de validacion -->
+        <section class="modal modalValid modalHidden" id="modalValid">
+          <div class="modalContent modalContentV">
+            <p class="validMessage" id="validM"></p>
+            <div class="buttonContainer">
+              <button class="actionButton" id="closeValidM">Salir</button>
+              <button class="actionButton hidden" id="overwrite">Si</button>
+              <button class="actionButton hidden" id="noOverwrite">No</button>
+            </div>
+          </div>
+        </section>
+        <section class="modal modalDelete modalHidden" id="modalDelete">
+          <div class="modalContent modalContentV">
+            <p class="validMessage">¿Desea borrar este Lote?</p>
+            <div class="buttonContainer">
+              <button class="actionButton" id="accepDelete">Si</button>
+              <button class="actionButton" id="noDelete">No</button>
+            </div>
           </div>
         </section>
       </section>
 
-      <section class="loteConter">
-        <div class="lote">
-          <div class="imagenLote"><img src="Imgs\descarga.jpg" alt="" /></div>
-          <h2 class="nroLote">Lote n°1: Herramientas</h2>
+      <!-- Contenedor de lotes -->
+      <section class="loteContainer" id="loteContainer">
+        <div class="lote" data-numero="1">
+          <div class="imagenLote">
+            <img src="Imgs\descarga.jpg" alt="" class="imgLote" />
+          </div>
+          <div class="nroLote">
+            <h2>
+              Lote n°<span class="num">1</span>:
+              <span class="title"> Herramientas</span>
+            </h2>
+          </div>
+
           <div class="dato">
-            <h1 class="precio">Precio Base: $500</h1>
+            <h1 class="precio">Precio base: $500</h1>
             <p class="desc">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint ea
-              doloribus amet vel error at temporibus labore ullam ratione nulla.
-              Error non cupiditate dolore odio repellendus possimus quibusdam
-              totam? Sequi.
+              Lorem ipsum dolor sit amet consectetur adipisicing elit.
+              Temporibus similique aliquam quasi sequi ipsum debitis corrupti
+              natus! Vitae maxime magnam nobis incidunt architecto, ad
+              doloremque, accusantium voluptate consequatur veniam ducimus?
             </p>
           </div>
+          <div class="adminButtons hidden">
+            <button class="editButton">
+              <img src="Imgs\pencil.png" alt="Editar" />
+            </button>
+            <button class="deleteButton">
+              <img src="Imgs\trash.png" alt="Borrar" />
+            </button>
+          </div>
         </div>
-        <div class="lote">
-          <div class="imagenLote"><img src="Imgs\ropero.jpg" alt="" /></div>
-          <h2 class="nroLote">Lote n°2: Ropero</h2>
+        <div class="lote" data-numero="2">
+          <div class="imagenLote">
+            <img src="Imgs\ropero.jpg" alt="" class="imgLote" />
+          </div>
+          <div class="nroLote">
+            <h2>
+              Lote n°<span class="num">2</span>:
+              <span class="title"> Ropero</span>
+            </h2>
+          </div>
           <div class="dato">
             <h1 class="precio">Precio base: -</h1>
             <p class="desc">
@@ -92,18 +231,46 @@
               Dignissimos, animi dolorem!
             </p>
           </div>
+          <div class="adminButtons hidden">
+            <button class="editButton">
+              <img src="Imgs\pencil.png" alt="Editar" />
+            </button>
+            <button class="deleteButton">
+              <img src="Imgs\trash.png" alt="Borrar" />
+            </button>
+          </div>
         </div>
-        <div class="lote">
-          <div class="imagenLote"><img src="Imgs\vagilla.jpg" alt="" /></div>
-          <h2 class="nroLote">Lote n°3: Vajilla</h2>
+        <div class="lote" data-numero="3">
+          <div class="imagenLote">
+            <img src="Imgs\vajilla.jpg" alt="" class="imgLote" />
+          </div>
+          <div class="nroLote">
+            <h2>
+              Lote n°<span class="num">3</span>:
+              <span class="title"> Vajilla</span>
+            </h2>
+          </div>
           <div class="dato">
-            <h1 class="precio">Presio base: $500</h1>
+            <h1 class="precio">Precio base: $500</h1>
             <p class="desc">
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt
               voluptas sint voluptatibus aperiam fugit, inventore quos maiores.
               Recusandae fuga quisquam nisi officiis rem ea iste amet unde.
               Dignissimos, animi dolorem!
             </p>
+          </div>
+          <div class="adminButtons hidden">
+            <button class="editButton">
+              <img src="Imgs\pencil.png" alt="Editar" />
+            </button>
+            <button class="deleteButton">
+              <img src="Imgs\trash.png" alt="Borrar" />
+            </button>
+          </div>
+        </div>
+        <div class="lotePlus hidden" id="lotePlus">
+          <div class="imagenLote">
+            <img src="Imgs\folder-plus.png" alt="" />
           </div>
         </div>
       </section>
