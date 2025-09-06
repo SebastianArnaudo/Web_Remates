@@ -20,6 +20,10 @@ const accepOverW = document.getElementById("overwrite"); //Boton para aceptar la
 const declineOverW = document.getElementById("noOverwrite"); //Boton para rechazar la reescritura
 const acepptDelete = document.getElementById("accepDelete"); //Boton para aceptar el borrado de lote
 const declineDelete = document.getElementById("noDelete"); //Boton para rechazar el borrado de lote
+const leftSlideModal = document.getElementById("slideButtonLeft"); //Boton izquierdo del slide de pop de lote
+const rightSlideModal = document.getElementById("slideButtonRight"); //Boton derecho del slide de pop de lote
+const slideButtonFormulLeft = document.getElementById("slideButtonFormulLeft"); //Boton izquierdo del slide del formulario
+const slideButtonFormulRight = document.getElementById("slideButtonFormulRight"); //Boton derecho del slide del formulario
 
 // === INPUTS Y MENSAJES ===
 const passIn = document.getElementById("passInput"); //Input del Pop Up de ingreso
@@ -49,9 +53,13 @@ const mDato = document.getElementById("datModal"); //Elemento descripcion del po
 
 // === VARIABLES GLOBALES ===
 
-let loteActual = null; //Variable global para almacenar lotes a editar
+let loteActual = null; //Variable global para almacenar lotes a seleccionado
 let loteEncontrado = null; //Variable global para almacenar la posicion de un lote existente
 let numLote = null; //Variable global para almacenar el numero del lote actual
+let currentImageIndex = 0; // índice global para saber qué imagen mostrar
+let imagesLote = []; // array global con las imágenes del lote abierto
+let imagesForm //array global con las imagenes del formulario
+let currentFormImage  // índice global para saber qué imagen mostrar
 
 // === AUTENTICACION ===
 
@@ -129,13 +137,32 @@ function openForm(){
 }
 
 inputImg.addEventListener("change", function() {
-    const file = this.files[0];           // obtener primer archivo
-    if (!file) return;
+    imagesForm = Array.from(this.files).map(file => URL.createObjectURL(file));
+    currentFormImage = 0;
 
-    const previewURL = URL.createObjectURL(file); // crear URL temporal
-
-    imgPreview.src = previewURL;           // asignar al src
+    imgPreview.src = imagesForm[currentFormImage];
     imgPreviewCont.classList.remove("hidden");
+    if(imagesForm.length > 1){
+    slideButtonFormulLeft.classList.remove("slideButtonOff");
+    slideButtonFormulRight.classList.remove("slideButtonOff");
+    } else {
+        slideButtonFormulLeft.classList.add("slideButtonOff");
+        slideButtonFormulRight.classList.add("slideButtonOff");
+    }
+
+});
+
+slideButtonFormulLeft.addEventListener("click",function(e){
+    e.preventDefault();
+
+    currentFormImage = (currentFormImage - 1 + imagesForm.length) % imagesForm.length;
+    imgPreview.src = imagesForm[currentFormImage];
+});
+slideButtonFormulRight.addEventListener("click",function(e){
+    e.preventDefault();
+
+    currentFormImage = (currentFormImage + 1) % imagesForm.length;
+    imgPreview.src = imagesForm[currentFormImage];
 });
 
 // === CREACION / EDICION DE LOTE ===
@@ -162,7 +189,7 @@ function getDat(){
             }
         } else{
             const newL = createLote();
-            fillLote(newL,inputT,inputN,inputP,inputD);
+            fillLote(newL,inputT,inputN,inputP,inputD,imagesForm);
             closeModal();
         }
     } else if(modalF.classList.contains("editLote")){
@@ -172,7 +199,7 @@ function getDat(){
                 vewbtnValid();
             }
         } else{
-            if(confirmChange(inputT,inputN,inputP,inputD)){
+            if(confirmChange(inputT,inputN,inputP,inputD,imagesForm)){
                 message = "¿Desea guardar los cambios?";
                 openValid(message);
                 vewbtnValid();
@@ -234,7 +261,7 @@ function validNro(n){
     }
     return [p, e];
 }
-function confirmChange(t,n,p,d){
+function confirmChange(t,n,p,d,images){
      // Valores actuales en el lote
     let change = false;
     let titleLote = loteActual.querySelector(".title").textContent.trim();
@@ -248,9 +275,20 @@ function confirmChange(t,n,p,d){
     if (p.trim() !== priceLote) change = true;
     if (d.trim() !== descLote) change = true;
 
+    const loteImages = JSON.parse(loteActual.dataset.images || "[]");
+
+    if (loteImages.length !== images.length) change = true;
+    else {
+        for (let j = 0; j < loteImages.length; j++){
+            if (loteImages[j] !== images[j]) {
+                change = true;
+                break;
+            }
+        }
+    }
+
     return change;
 }
-
 function noRepit(n){ 
     const numero = Number(n);
     const lotes = Array.from(cardContainer.querySelectorAll(".lote[data-numero]"));
@@ -283,11 +321,11 @@ accepOverW.addEventListener("click", () => {
         // --- CREACIÓN ---
         if (loteEncontrado) {
             // Número ya existe, se sobrescribir
-            fillLote(loteEncontrado, t, n, p, d);
+            fillLote(loteEncontrado, t, n, p, d,imagesForm);
         } else {
             // Número libre, se crea nuevo lote
             const newL = createLote();
-            fillLote(newL, t, n, p, d);
+            fillLote(newL, t, n, p, d,imagesForm);
         }
     } 
     if(modalF.classList.contains("editLote")) {
@@ -295,14 +333,14 @@ accepOverW.addEventListener("click", () => {
 
         if (n === numActual) {
             // Número no cambió, se aplican cambios
-            fillLote(loteActual, t, n, p, d);
+            fillLote(loteActual, t, n, p, d,imagesForm);
         } else if (!loteEncontrado) {
             // Número cambiado a uno libre, se actualiza lote
-            fillLote(loteActual, t, n, p, d);
+            fillLote(loteActual, t, n, p, d,imagesForm);
         } else {
             // Número cambiado a uno ocupado, se elimina existente y se actualiza
             cardContainer.removeChild(loteEncontrado);
-            fillLote(loteActual, t, n, p, d);
+            fillLote(loteActual, t, n, p, d,imagesForm);
         }
     }
 
@@ -353,6 +391,11 @@ function createLote(){
     imgEd.src = "Imgs/pencil.png";
     imgDe.src = "Imgs/trash.png";
 
+    
+    if(adminLote.classList.contains("hidden")){
+        btnContain.classList.add("hidden");
+    }
+
     //Estructuracion del lote
     imgCont.append(imgLot);
     descCont.append(precio,descLote);
@@ -372,16 +415,18 @@ function createLote(){
     lote.sTitle = sTitle;
     lote.precio = precio;
     lote.descLote = descLote;
+
     return(lote);
 }
 
 //Dando contenido al lote
-function fillLote(l,t,n,p,d){
+function fillLote(l,t,n,p,d,i){
     
     l.setAttribute("data-numero", n);
-
-    const file = inputImg.files[0];
-    let imgURL;
+    // Guardamos todas las imágenes en un atributo HTML
+    if (i && i.length > 0) {
+        l.setAttribute("data-images", JSON.stringify(i));
+    }
 
     // Selecciono los elementos internos del lote
     const img = l.querySelector(".imgLote");
@@ -390,9 +435,10 @@ function fillLote(l,t,n,p,d){
     const precio = l.querySelector(".precio");
     const desc = l.querySelector(".desc");
 
-    if (file) {
-        imgURL = URL.createObjectURL(file);
-        img.src = imgURL;
+
+    if(i && i.length > 0) {
+        l.dataImages = i;   // guardamos todas las URLs
+        img.src = i[0];     // mostramos la primera en la tarjeta
         img.alt = t;
     } else {
         img.alt = t;
@@ -456,15 +502,41 @@ cardContainer.addEventListener("click", (e) => {
 function openCard(c) {
     modal.classList.remove("modalHidden");
     modalL.classList.remove("modalHidden");
+    loteActual = c;
 
     //Segun corresponde se va obteniendo la informacion 
     //de cada elemento de la tarjeta para reflejarla en el modal
 
-    mImg.src = c.querySelector(".imagenLote img").src;
+    imagesLote = JSON.parse(c.dataset.images || "[]");
+    currentImageIndex = 0;
+
+    // Setear la primera imagen
+    if (imagesLote.length > 0) {
+        mImg.src = imagesLote[currentImageIndex];
+        rightSlideModal.classList.remove("slideButtonOff");
+        leftSlideModal.classList.remove("slideButtonOff");
+    } else {
+        mImg.src = c.querySelector(".imagenLote img").src;
+        rightSlideModal.classList.add("slideButtonOff");
+        leftSlideModal.classList.add("slideButtonOff");
+    }
+
     mLote.textContent = c.querySelector(".nroLote").textContent;
     mPrecio.textContent = c.querySelector(".precio").textContent;
     mDato.textContent = c.querySelector(".desc").textContent;
 }
+
+leftSlideModal.addEventListener("click", () => {
+    if (imagesLote.length === 0) return; // no hay imágenes
+    currentImageIndex = (currentImageIndex - 1 + imagesLote.length) % imagesLote.length;
+    mImg.src = imagesLote[currentImageIndex];
+});
+
+rightSlideModal.addEventListener("click", () => {
+    if (imagesLote.length === 0) return;
+    currentImageIndex = (currentImageIndex + 1) % imagesLote.length;
+    mImg.src = imagesLote[currentImageIndex];
+});
 
 //EDITAR
 function openEditForm(c){
@@ -484,7 +556,20 @@ function openEditForm(c){
     inputNro.value = c.querySelector(".num").textContent;
     inpuPrecio.value = c.querySelector(".precio").textContent.replace("Precio base: $", "");
     inputDes.value = c.querySelector(".desc").textContent;
-    imgPreview.src = c.querySelector(".imgLote").src;
+    
+    // Inicializar arreglo de imágenes desde el lote
+    const loteImages = JSON.parse(c.dataset.images || "[]");
+    imagesForm = loteImages.slice(); 
+    
+    // copia para manipular
+    currentFormImage = 0;
+    if(imagesForm.length > 0){
+        imgPreview.src = imagesForm[0];
+        if(imagesForm.length > 1){
+            slideButtonFormulLeft.classList.remove("slideButtonOff");
+            slideButtonFormulRight.classList.remove("slideButtonOff");
+        }
+    }
 }
 
 //BORRAR

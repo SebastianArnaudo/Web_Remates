@@ -58,6 +58,7 @@ nav{
     align-items: center;
 }
 .modal{
+    position: relative;
     display: block;
     position: fixed;
     box-sizing: border-box;
@@ -65,15 +66,16 @@ nav{
     background: linear-gradient(to right top, rgb(217, 0, 0) 20%, rgb(214, 72, 1) 60%);
     pointer-events: all;
     border-radius: .5rem;
-    padding: 10px;
     text-align: center;
     min-height: 200px;
-    width: 70%;
+    width: 30%;
     min-width: min-content;
     box-shadow: 5px 3px 15px #632102,-5px -3px 15px #632102;
 }
-.modalInput,.modalConfirm,.modalFormul,.modalValid,.modalDelete{
-    width: 30%;
+.modalLote{
+    padding: 0;
+    height: 500px;
+    width: 70%;
 }
 .modalConfirm{
     padding: 5px;
@@ -85,15 +87,19 @@ nav{
 
 /**BOTON DE CIERRE DE LOS POP UPs**/
 
-.closeButtonContent{
+.closeButtonContent {
     position: absolute;
     top: .5rem;
     right: .5rem;
+    z-index: 7;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .closeButton{
     padding: 5px;
     font-size: 20px;
-    color:black;
+    color:white;
     height: 10%;
     width: 10%;
     min-width: min-content;
@@ -114,9 +120,12 @@ nav{
     display: flex;
     flex-direction: row;
     gap: 1rem;
-    align-items: center;
+    align-items: stretch;
+    height: 100%;
+    box-sizing: border-box;
 }
 .modalContentI,.modalContentC,.modalContentF,.modalContentV{
+    align-items: center;
     flex-direction: column;
     padding:2.5rem;   
 }
@@ -228,11 +237,12 @@ nav{
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
 }
 
 .imgPreviewContainer img {
-    max-width: 150px;   /* ancho máximo de la miniatura */
-    max-height: 150px;  /* alto máximo de la miniatura */
+    max-width: 150px;   
+    max-height: 150px;  
     border-radius: 0.3rem;
     object-fit: cover;
     box-shadow: 2px 2px 8px #632102, -2px -2px 8px #632102;
@@ -258,25 +268,29 @@ nav{
 /**VISTA DEL LOTE**/
 
 .modalImage {
-    max-width: 300px;
-    max-height: 300px;
-    flex-shrink: 0;
+    flex: 2;
+    position: relative;
+    display: flex;
+    align-items: center; 
+    justify-content: center;
     overflow: hidden;
-}
-.modalImage img {
-    width: 100%;
-    height: auto;
-    object-fit: cover;
+    background-color: #1a1a1a;
     border-top-left-radius: .5rem;
     border-bottom-left-radius: .5rem;
 }
+.modalImage img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
 .infoModal {
-    color: wheat;
-    flex: 1;
-    text-align: left;
+    flex: 1; /* menos ancho que la imagen */
     display: flex;
     flex-direction: column;
-    max-height: 300px;                                              
+    padding: 1rem;
+    color: wheat;
+    text-align: left;
+    overflow: hidden;                                             
 }
 .descModal{
     font-size:larger;
@@ -291,6 +305,51 @@ nav{
     background-color: #d9d8d8;
     border-radius: 5px;
 }
+.slideImage {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between; 
+    align-items: center; 
+    z-index: 2;
+    pointer-events: none; 
+}
+.slideButton {
+    pointer-events: all;
+    background-color:rgba(255, 255, 255, 0.78);
+    color:rgb(255, 128, 0);
+    border:1px,solid,rgb(255, 128, 0);
+    border-radius: 0.3rem;
+    font-size: 1rem;
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    transition: color,background.2s;
+}
+.slideButton:hover{
+    color:rgba(255, 255, 255, 0.78);
+    background-color:rgb(255, 128, 0);
+}
+
+.slideFormul {
+    top: 50%;            
+    right: 0;            
+    transform: translateY(-50%);
+}
+
+.slideButtonFor{
+    margin: 0 -50px; 
+    background-color:rgb(255, 255, 255);
+    color:rgb(255, 128, 0);
+    border:1px,solid,rgb(255, 128, 0);
+}
+
+.slideButtonOff{
+    pointer-events: none;
+    opacity: .5;
+}
 
 /**OCULTAR POP UPs**/
 
@@ -301,7 +360,7 @@ nav{
 /**CONTENEDOR PRINCIPAL**/
 
 .mainContainer{
-    margin-top: 60px;
+    margin-top: 20px;
     height: 100vh;
     width: 100%;
 }
@@ -479,20 +538,24 @@ nav{
         flex-direction: column;
     }
 
-    .imgModal {
-        max-width: 300px;
-        max-height: 300px;
+    .modalImage {
+        width: 100%;       
+        height: auto;       
+        max-width: none;    
+        max-height: 50vh;   
+        position: relative; 
         flex-shrink: 0;
         overflow: hidden;
-    }
-
-    .imgModal img {
-        width: 100%;
-        height: auto;
-        object-fit: cover;
         border-top-left-radius: .5rem;
         border-top-right-radius: .5rem;
         border-bottom-left-radius: 0;
+    }
+
+    .modalImage img {
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+
     }
     .titles {
         flex-direction: column;
@@ -528,8 +591,20 @@ nav{
     .contact img:hover {
         transform: none !important;
     }
-
+    .closeButton{
+        border-radius: 0.3rem;
+        color:black;
+        background-color:rgba(255, 255, 255, 0.78);
+    }
     .closeButton:hover {
         color: black !important;
+    }
+    .actionButton:hover{
+        background-color:rgb(144, 144, 144) !important;
+        color:#ffc400 !important;
+    }    
+    .slideButton:hover{
+        color:rgba(255, 255, 255, 0.78) !important;
+        background-color:rgb(255, 128, 0) !important;
     }
 }

@@ -34,13 +34,26 @@
 
           <div class="modalContent" id="modalContent">
             <div class="modalImage" id="modalImage">
-              <img id="modalI" src="" alt="" />
+              <div class="slideImage">
+                <button class="slideButton" id="slideButtonLeft">
+                  &#10094;
+                </button>
+                <button class="slideButton" id="slideButtonRight">
+                  &#10095;
+                </button>
+              </div>
+              <img id="modalI" src="Imgs\descarga.jpg" alt="" />
             </div>
             <div class="infoModal">
-              <h2 id="loteModal"></h2>
-              <h3 id="precioModal"></h3>
+              <h2 id="loteModal">Lote n°1 Herramientas</h2>
+              <h3 id="precioModal">Precio base: $500</h3>
               <div class="descModal">
-                <p id="datModal"></p>
+                <p id="datModal">
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                  Dolor, unde. Maiores facilis vero itaque porro eum vel
+                  repudiandae qui adipisci, dolore rerum reiciendis hic delectus
+                  tenetur! Asperiores, dolor. Fugit, tempore.
+                </p>
               </div>
             </div>
           </div>
@@ -84,7 +97,7 @@
         </section>
 
         <!-- POP UP de creacion de lote -->
-        <section class="modal modalFormul newLote modalHidden" id="modalFormul">
+        <section class="modal modalFormul modalHidden newLote" id="modalFormul">
           <div class="closeButtonContent">
             <button class="closeButton">X</button>
           </div>
@@ -133,13 +146,14 @@
                 </div>
                 <div class="buttonsContainer">
                   <label for="imgInput" class="falseImgInput" id="falseImgInput"
-                    >Ingrese la imagen del lote</label
+                    >Ingrese las imagenes del lote</label
                   >
                   <input
                     type="file"
                     accept="image/*"
                     name="imgInput"
                     id="imgInput"
+                    multiple
                   />
                   <div
                     class="imgPreviewContainer hidden"
@@ -151,6 +165,20 @@
                       class="imgPreview"
                       id="imgPreview"
                     />
+                    <div class="slideImage slideFormul">
+                      <button
+                        class="slideButton slideButtonFor slideButtonOff"
+                        id="slideButtonFormulLeft"
+                      >
+                        &#10094;
+                      </button>
+                      <button
+                        class="slideButton slideButtonFor slideButtonOff"
+                        id="slideButtonFormulRight"
+                      >
+                        &#10095;
+                      </button>
+                    </div>
                   </div>
                   <button class="actionButton" id="addLote">Cargar Lote</button>
                 </div>
@@ -159,7 +187,7 @@
           </div>
         </section>
 
-        <!-- POP UP de validacion -->
+        <!-- POP UPs de validacion -->
         <section class="modal modalValid modalHidden" id="modalValid">
           <div class="modalContent modalContentV">
             <p class="validMessage" id="validM"></p>
@@ -183,7 +211,11 @@
 
       <!-- Contenedor de lotes -->
       <section class="loteContainer" id="loteContainer">
-        <div class="lote" data-numero="1">
+        <div
+          class="lote"
+          data-numero="1"
+          data-images='["Imgs/descarga.jpg","Imgs/destornillador.jpg","Imgs/llave.jpg","Imgs/martillo.jpg"]'
+        >
           <div class="imagenLote">
             <img src="Imgs\descarga.jpg" alt="" class="imgLote" />
           </div>
@@ -212,7 +244,7 @@
             </button>
           </div>
         </div>
-        <div class="lote" data-numero="2">
+        <div class="lote" data-numero="2" data-images='["Imgs/ropero.jpg"]'>
           <div class="imagenLote">
             <img src="Imgs\ropero.jpg" alt="" class="imgLote" />
           </div>
@@ -240,7 +272,7 @@
             </button>
           </div>
         </div>
-        <div class="lote" data-numero="3">
+        <div class="lote" data-numero="3" data-images='["Imgs/vajilla.jpg"]'>
           <div class="imagenLote">
             <img src="Imgs\vajilla.jpg" alt="" class="imgLote" />
           </div>
